@@ -1,11 +1,12 @@
 # ononSmartView
+
 **Rhino 8 視圖導覽外掛** · [English](README.md)
 
 ![ononSmartView 在 Rhino 8 中執行](ononSmartViewCube.png)
 
 ononSmartView 是以 C# / RhinoCommon 開發的外掛，可正視 Brep 面、讓攝影機配合 Rhino 目前的工作平面，並透過輕量 ViewCube 導覽。專案以 .NET 8 和 AnyCPU 為目標，不使用 WPF 或 Windows Forms。
 
-> **測試版本：功能尚未完整，仍有疏漏與未驗證之處。** 外掛曾在 macOS Rhino 8.35 測試；Windows 套件已建置，但尚未在 Windows Rhino 實際測試。請勿用於正式生產工作，重要模型請先備份。
+> **測試版本：功能尚未完整，仍有疏漏與未驗證之處。** 外掛曾在 macOS Rhino 8.35 測試；Windows Yak 套件已建置，但尚未在 Windows Rhino 實際測試。請勿用於正式生產工作，重要模型請先備份。
 
 ## 功能
 
@@ -35,9 +36,13 @@ ononSmartView 是以 C# / RhinoCommon 開發的外掛，可正視 Brep 面、讓
 
 ## Windows 安裝
 
-Windows 版本以 AnyCPU 和 .NET 8 為目標。下載 [ononSmartView.rhi](ononSmartView.rhi)。若 Rhino Installer Engine 無法開啟，請下載[手動載入檔](ononSmartView-windows-manual.zip)並解壓縮；將兩個檔案放在同一資料夾，再使用 Rhino 的 `PlugInManager` 指令安裝／載入 `ononSmartView.rhp`。載入後請重新啟動 Rhino。
+Windows 版本以 AnyCPU 和 .NET 8 為目標。下載 [ononsmartview-0.1.0-beta-rh8_35-win.yak](ononsmartview-0.1.0-beta-rh8_35-win.yak)，並用 Rhino 8 隨附的 Yak 命令列工具安裝：
 
-`.rhi` 採用 Rhino 舊式安裝格式。請參考 McNeel 的 [Windows 外掛安裝說明](https://developer.rhino3d.com/guides/rhinocommon/plugin-installers-windows/)與 [Rhino Installer Engine 說明](https://developer.rhino3d.com/guides/general/rhino-installer-engine/)。
+```powershell
+& "$env:ProgramFiles\Rhino 8\System\yak.exe" install "C:\path\to\ononsmartview-0.1.0-beta-rh8_35-win.yak"
+```
+
+安裝後重新啟動 Rhino。此套件適用於 Windows Rhino 8.35 以上版本。若無法使用 Yak，請下載[手動載入檔](ononSmartView-windows-manual.zip)並解壓縮；將兩個檔案放在同一資料夾，再使用 Rhino 的 `PlugInManager` 指令安裝／載入 `ononSmartView.rhp`。
 
 ## 編譯
 
@@ -47,7 +52,7 @@ Windows 版本以 AnyCPU 和 .NET 8 為目標。下載 [ononSmartView.rhi](ononS
 dotnet build ononSmartView.csproj -c Release
 ```
 
-Windows 編譯請使用 Rhino 8 的 `System/RhinoCommon.dll`。`scripts/build-windows.ps1` 會編譯外掛並產生 `.rhi` 與 `.rhp` 套件。
+Windows 編譯請使用 Rhino 8 的 `System/RhinoCommon.dll`。`scripts/build-windows.ps1` 會編譯外掛並產生 Rhino 8 Windows `.yak` 套件與手動載入檔。
 
 ## 測試與限制
 
