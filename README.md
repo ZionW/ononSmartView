@@ -1,62 +1,93 @@
 # ononSmartView
 
-**Experimental Rhino 8 viewport navigation plug-in** · [繁體中文版](README.zh-TW.md)
+**Experimental viewport navigation for Rhino 7, 8 and 9 · macOS / Windows**
+[繁體中文](README.zh-TW.md) · [Download v0.2.0-beta.1](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)
 
-![ononSmartView running in Rhino 8](ononSmartViewCube.png)
+> **TEST VERSION — incomplete and subject to change.** Known gaps and unverified behavior remain. This release was built separately for each Rhino major version. Recent interaction checks and the demonstration were performed in macOS Rhino 9; the new Rhino 7/8 binaries and all Windows binaries have not been tested in their target Rhino applications. Save important models before trying it.
 
-ononSmartView is a C# / RhinoCommon plug-in for focusing on Brep faces, aligning the camera to Rhino's active construction plane, and navigating with a lightweight ViewCube. It targets .NET 8 and AnyCPU and does not use WPF or Windows Forms.
+## 20-second demonstration
 
-> **TEST VERSION — incomplete and subject to change.** This plug-in still has known gaps and unverified behavior. It has been tested on macOS with Rhino 8.35; the Windows Yak package has been built but not tested in Windows Rhino. Do not rely on it for production work, and save backups of important models.
+![SmartViewCube: 20-second feature demonstration](docs/SmartViewCube-20s.gif)
+
+Actual Mac Rhino 9 viewport captures, operated through MCP commands and plug-in callbacks, with Traditional Chinese captions. Demonstrates show/hide, drag rotation, selected-object orbit, face/edge/corner snaps, projection switching, view reset, CPlane following, and Focus / Flip / Back on planar and curved faces. The GIF is silent and loops. [Full-resolution GIF and MP4](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1).
+
+## Choose your package
+
+| Rhino | Target runtime | macOS | Windows |
+| --- | --- | --- | --- |
+| 7 | .NET Framework 4.8 / Mono, AnyCPU | `rhino7-mac.macrhi` | `rh7_0-win.yak` or `rhino7-windows-rhp.zip` |
+| 8.35+ | .NET 8, AnyCPU | `rhino8-mac.macrhi` | `rh8_35-win.yak` or `rhino8-windows-rhp.zip` |
+| 9 with .NET 10 | .NET 10, AnyCPU | `rhino9-mac.macrhi` | `rh9_0-win.yak` or `rhino9-windows-rhp.zip` |
+
+Rhino 9 packages are built against SDK 9.0.26300.9402 and require a .NET 10 Rhino 9 build. Package filename suffixes are shown above; complete filenames include the release version. **Install only the package matching the Rhino version you intend to use.** Older Rhino 8 builds and early Rhino 9 WIP builds using older .NET runtimes are not covered.
 
 ## Features
 
-- Select a Brep face to set the construction plane and animate the camera to a face-on parallel view. Planar faces are preferred; curved faces use a tangent frame at the picked point.
-- `ononSmartViewBack` restores the camera, projection, target, lens, and construction plane captured before focus. `ononSmartViewFlip` turns the focused view around.
-- The ViewCube supports face, edge, and corner snaps, drag rotation, quarter-turn buttons, and reset. In Perspective, reset returns to the view recorded immediately before the current ViewCube session. Standard views return to their default direction and frame the model.
-- The circular **C** button toggles automatic camera alignment to the active construction plane. It only changes the setting; it does not move the camera when clicked. When enabled, the camera follows the next construction-plane change, including Object and World CPlanes. Perspective remains perspective for gumball operations. The plug-in does not change Rhino's Auto CPlane preference.
+- Focus a Brep face: set a face CPlane and animate to a face-on parallel view. Planar faces use a plane; curved faces use a tangent frame at the pick point.
+- Back restores the pre-focus camera, projection, target, lens and CPlane. Flip reverses the focused viewing direction.
+- ViewCube face, edge and corner clicks snap the view and switch parallel / perspective projection. Drag to orbit; use the arrow buttons for 90° turns.
+- Orbit animation follows an arc rather than moving through the model. Rotation keeps its orbit radius and lens settings. Selecting one object uses its bounding-box center; multiple selected objects use the combined bounding-box center. With no selection, the current viewport target is used. This selection pivot applies to ViewCube dragging and its rotation buttons.
+- The home icon returns Perspective to the view saved before the current ViewCube session. Standard named views return to their default direction and frame visible objects.
+- The circular **C** button enables/disables camera alignment with CPlane changes. Clicking C changes the setting only. When disabled, selecting objects or changing the CPlane does not trigger plug-in camera alignment. It does not change Rhino's Auto CPlane preference.
+- Rhino 7 has no Rhino 8 Auto CPlane. Its C toggle follows manual / World CPlane changes.
+- The SmartView toolbar includes a custom light/dark cube icon for showing or hiding the ViewCube.
 
 ## Commands
 
-| Command | Description |
+| Command | Action |
 | --- | --- |
-| `ononSmartView` | Select a Brep face and focus it. |
-| `ononSmartViewBack` | Restore the camera and construction plane from before focus. |
-| `ononSmartViewFlip` | Flip the focused view. |
-| `ononSmartViewCube` | Toggle the ViewCube. |
-| `ononSmartViewAutoFace` | Toggle camera alignment to the active construction plane; same as the circular C button. |
-| `ononSmartViewFocusFace` | Scriptable face-focus command; prompts for Brep GUID, face index, and viewport name. |
+| `SmartViewCube` | Show / hide ViewCube. Replaces the old `ononSmartViewCube` command. |
+| `ononSmartView` | Pick a Brep face and focus it. |
+| `ononSmartViewFlip` | Reverse the focused view. |
+| `ononSmartViewBack` | Restore the pre-focus camera and CPlane. |
+| `ononSmartViewAutoFace` | Toggle CPlane following, equivalent to C. |
+| `ononSmartViewFocusFace` | Scriptable focus: Brep GUID, zero-based face index and viewport name. |
+
+Toolbar / keyboard macro: `_SmartViewCube`. Update existing shortcuts that use the previous command name.
 
 ## Install on macOS
 
-1. Download [ononSmartView.macrhi](ononSmartView.macrhi).
-2. Open the `.macrhi` installer with Rhino 8 and restart Rhino if prompted.
-3. Remove any older `SmartView` plug-in first to avoid duplicate ViewCubes or Auto CPlane listeners.
+1. Download the `.macrhi` for your Rhino major version from [Releases](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1).
+2. Quit that Rhino version, remove an older copy of this plug-in, and open the installer with the intended Rhino application (use **Open With** if several Rhino versions are installed).
+3. Restart Rhino. Run `SmartViewCube` to toggle the overlay.
 
-The installer is unsigned, so macOS security settings may ask you to confirm loading it.
+The installer is unsigned. The bundle includes `ononSmartView.rui`. In Rhino 8/9, open it from toolbar settings and show the **SmartView** toolbar if it is not already visible. Toolbar customization differs in Rhino 7 for Mac; use the command or assign `_SmartViewCube` to a keyboard shortcut there.
 
 ## Install on Windows
 
-The Windows package targets AnyCPU and .NET 8. Download [ononsmartview-0.1.0-beta-rh8_35-win.yak](ononsmartview-0.1.0-beta-rh8_35-win.yak), then install it with Rhino 8's Yak command-line tool:
+**Manual RHP installation** is available for Rhino 7, 8 and 9:
+
+1. Download the matching `rhinoN-windows-rhp.zip` and extract it into a permanent local folder.
+2. If Windows Properties offers **Unblock**, unblock the downloaded archive/files.
+3. Run `PlugInManager` in the matching Rhino version, choose **Install**, and select the extracted `ononSmartView.rhp`. Do not load directly from the ZIP or move the folder afterwards.
+4. Open `ononSmartView.rui` in toolbar settings if you want the icon button.
+
+Alternatively, install the matching `.yak` from PowerShell. For Rhino 7:
 
 ```powershell
-& "$env:ProgramFiles\Rhino 8\System\yak.exe" install "C:\path\to\ononsmartview-0.1.0-beta-rh8_35-win.yak"
+& "$env:ProgramFiles\Rhino 7\System\Yak.exe" install "C:\Downloads\ononsmartview-0.2.0-beta.1-rh7_0-win.yak"
 ```
 
-Restart Rhino after installation. This package is built for Rhino 8.35 and later on Windows. If Yak installation is unavailable, download [the manual-load archive](ononSmartView-windows-manual.zip), extract both files into one folder, then install/load `ononSmartView.rhp` with Rhino's `PlugInManager` command.
+Replace `Rhino 7` and the package path for Rhino 8 or 9. A `.yak` is a package, not an RHP or model file; use Yak CLI if dragging it into Rhino reports an unsupported type. Remove an older installation and restart Rhino before switching between Yak and manual installation, to avoid duplicate copies.
 
-## Build
+## Build and packaging
 
-Requirements: Rhino 8 with RhinoCommon and the .NET 8 SDK.
+Source is included in this repository and the versioned source ZIP. Use the .NET 8 SDK for Rhino 8, the .NET 10 SDK for Rhino 9, and the .NET Framework 4.8 reference-assembly package for Rhino 7. Reference the RhinoCommon SDK for the target major version; do not reference Rhino 9 assemblies when building for Rhino 7/8.
 
 ```sh
-dotnet build ononSmartView.csproj -c Release
+dotnet build ononSmartView.csproj -c Release -p:RhinoVersion=9
+# For Rhino 7/8, use -p:RhinoVersion=7 or 8.
+# Override SDK location with -p:RhinoCommonPath=/absolute/path/RhinoCommon.dll.
 ```
 
-On Windows, use Rhino 8's `System/RhinoCommon.dll` reference. `scripts/build-windows.ps1` builds the plug-in and creates the Rhino 8 Windows `.yak` package and manual-load archive.
+For Rhino 7, the default SDK location is `work/rhino7-sdk/lib/net45/RhinoCommon.dll`, extracted from official NuGet package `RhinoCommon 7.0.20314.3001`. `scripts/package-release.py` packages existing successful builds for all three versions; `scripts/build-toolbar.py` regenerates the vector toolbar assets (requires Pillow). No WPF or Windows Forms UI is used.
 
 ## Testing and limitations
 
-The smoke-test script creates a box and a slanted face for manual checks; it does not automate face picking or camera assertions. Rhino MCP testing on macOS Rhino 8.35 verified the C toggle with the legacy plug-in disabled. Windows runtime behavior and the latest face-axis alignment still need in-Rhino verification. Treat this release as a test build: some details may be incomplete, inaccurate, or change as issues are found.
+- Mac Rhino 9 MCP checks confirmed constant-radius rotation, stable lens values, selected-object pivots and mouse callback behavior in recent builds. The 20-second demonstration uses installed beta.6 functionality.
+- The new release is rebuilt from that source with target-specific SDKs. Runtime testing of these exact release binaries is still pending.
+- Rhino 7/8 current binaries and all Windows runtime behavior remain unverified. Rhino 8.35 has earlier historical checks, which do not validate this new release.
+- Native toolbar layout varies by platform/version. No automatic double-click-to-focus gesture is installed.
 
 ## License
 

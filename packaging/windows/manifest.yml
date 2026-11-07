@@ -1,0 +1,13 @@
+name: ononsmartview
+version: $version
+authors:
+  - ZionW
+description: >
+  Experimental Rhino 8 view navigation plug-in with face focus, work-plane
+  camera alignment and ViewCube controls. Test version with known gaps.
+url: https://github.com/ZionW/ononSmartView
+keywords:
+  - rhino
+  - viewport
+  - viewcube
+  - construction-plane

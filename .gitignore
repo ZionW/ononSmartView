@@ -1,0 +1,12 @@
+bin/
+obj/
+work/
+*.user
+*.suo
+*.rhl
+.DS_Store
+*.dll
+*.pdb
+*.rhi
+*.rhp/
+!dist/**/*.rhi

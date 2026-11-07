@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<RhinoUI major_ver="4" minor_ver="0" guid="acc35bcc-253f-42ab-80b1-9f004f059d95" localize="False" default_language_id="1033" dpi_scale="100" plug_in_guid="8c981dce-6e31-4c7a-a9bc-7f25701b9d34">
+  <extend_rhino_menus />
+  <menus />
+  <tool_bar_groups>
+    <tool_bar_group guid="012b2ed2-5b9b-4a2e-9070-ed01be113b95" hide_single_tab="True" single_file="False" point_floating="240,180" active_tool_bar_group="ea760a50-03ea-435a-967c-6be8141d65e5">
+      <text>
+        <locale_1033>SmartView</locale_1033>
+        <locale_1028>SmartView</locale_1028>
+      </text>
+      <tool_bar_group_item guid="e5ad0f81-d91b-4af6-a5a4-9b290b70f16b" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>SmartView</locale_1033>
+          <locale_1028>SmartView</locale_1028>
+        </text>
+        <tool_bar_id>ea760a50-03ea-435a-967c-6be8141d65e5</tool_bar_id>
+      </tool_bar_group_item>
+    </tool_bar_group>
+  </tool_bar_groups>
+  <tool_bars>
+    <tool_bar guid="ea760a50-03ea-435a-967c-6be8141d65e5" bitmap_id="c9fd8687-e27f-451b-ad65-249579464b76" item_display_style="bitmap">
+      <text>
+        <locale_1033>SmartView</locale_1033>
+        <locale_1028>SmartView</locale_1028>
+      </text>
+      <tool_bar_item guid="b58ce4bf-0492-4264-a498-42826b73ad41">
+        <text>
+          <locale_1033>Show / hide ViewCube</locale_1033>
+          <locale_1028>顯示／隱藏 ViewCube</locale_1028>
+        </text>
+        <left_macro_id>de7248ac-f7cc-439f-9379-16716fc149cc</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+  </tool_bars>
+  <macros>
+    <macro_item guid="de7248ac-f7cc-439f-9379-16716fc149cc" bitmap_id="c9fd8687-e27f-451b-ad65-249579464b76">
+      <text>
+        <locale_1033>Show / hide ViewCube</locale_1033>
+        <locale_1028>顯示／隱藏 ViewCube</locale_1028>
+      </text>
+      <button_text>
+        <locale_1033>Show / hide ViewCube</locale_1033>
+        <locale_1028>顯示／隱藏 ViewCube</locale_1028>
+      </button_text>
+      <menu_text>
+        <locale_1033>Show / hide ViewCube</locale_1033>
+        <locale_1028>顯示／隱藏 ViewCube</locale_1028>
+      </menu_text>
+      <tooltip>
+        <locale_1033>Show / hide ViewCube</locale_1033>
+        <locale_1028>顯示／隱藏 ViewCube</locale_1028>
+      </tooltip>
+      <script>_SmartViewCube</script>
+    </macro_item>
+  </macros>
+  <icons>
+    <icon guid="c9fd8687-e27f-451b-ad65-249579464b76">
+      <light>&lt;svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"&gt;
+&lt;circle cx="16" cy="16" r="14" fill="none" stroke="#9BA6AE" stroke-width="1.4"/&gt;
+&lt;g stroke="#475968" stroke-width="1.45" stroke-linejoin="round"&gt;
+&lt;path d="M16 6.8 24 11.4 16 16 8 11.4Z" fill="#DDEDF8"/&gt;
+&lt;path d="M8 11.4 16 16 16 25.2 8 20.6Z" fill="#F8FAFC"/&gt;
+&lt;path d="M16 16 24 11.4 24 20.6 16 25.2Z" fill="#E9EEF2"/&gt;
+&lt;/g&gt;&lt;/svg&gt;</light>
+      <dark>&lt;svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"&gt;
+&lt;circle cx="16" cy="16" r="14" fill="none" stroke="#88939D" stroke-width="1.4"/&gt;
+&lt;g stroke="#E4E9EE" stroke-width="1.45" stroke-linejoin="round"&gt;
+&lt;path d="M16 6.8 24 11.4 16 16 8 11.4Z" fill="#263D51"/&gt;
+&lt;path d="M8 11.4 16 16 16 25.2 8 20.6Z" fill="#26313B"/&gt;
+&lt;path d="M16 16 24 11.4 24 20.6 16 25.2Z" fill="#1B2630"/&gt;
+&lt;/g&gt;&lt;/svg&gt;</dark>
+    </icon>
+  </icons>
+  <bitmaps>
+    <small_bitmap item_width="16" item_height="16" />
+    <normal_bitmap item_width="24" item_height="24" />
+    <large_bitmap item_width="32" item_height="32" />
+  </bitmaps>
+  <scripts />
+</RhinoUI>
