@@ -1,94 +1,94 @@
 # ononSmartView
 
-**Experimental viewport navigation for Rhino 7, 8 and 9 · macOS / Windows**
-[繁體中文](README.zh-TW.md) · [Download v0.2.0-beta.1](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)
+**Rhino 7、8、9 視圖導覽測試外掛 · macOS／Windows**
+[English](README.en.md) · [下載 v0.2.0-beta.1](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)
 
-> **TEST VERSION — incomplete and subject to change.** Known gaps and unverified behavior remain. This release was built separately for each Rhino major version. Recent interaction checks and the demonstration were performed in macOS Rhino 9; the new Rhino 7/8 binaries and all Windows binaries have not been tested in their target Rhino applications. Save important models before trying it.
+> **此為測試版本，仍有疏漏、不足及未驗證之處。** 各 Rhino 主版本分別編譯。近期操作驗證與示範使用 macOS Rhino 9；本次新建置的 Rhino 7／8，以及所有 Windows 套件，尚未於對應的 Rhino 實機測試。重要模型請先儲存備份。
 
-## 20-second demonstration
+## 20 秒功能示範
 
-![SmartViewCube: 20-second feature demonstration](docs/SmartViewCube-20s.gif)
+![SmartViewCube 20 秒功能操作示範](docs/SmartViewCube-20s.gif)
 
-Actual Mac Rhino 9 viewport captures, operated through MCP commands and plug-in callbacks, with Traditional Chinese captions. Demonstrates show/hide, drag rotation, selected-object orbit, face/edge/corner snaps, projection switching, view reset, CPlane following, and Focus / Flip / Back on planar and curved faces. The GIF is silent and loops. [Full-resolution GIF and MP4](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1).
+使用 Mac Rhino 9 的實際視窗畫面，透過 MCP 指令與外掛回呼自動操作，加入中文字幕。包含顯示／隱藏、拖曳旋轉、選取物件中心旋轉、面／邊／角視角、投影切換、返回視角、C 工作平面跟隨，以及平面與曲面的 Focus／Flip／Back。GIF 無聲循環播放。[原尺寸 GIF 與 MP4](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)。
 
-## Choose your package
+## 請選擇對應版本
 
-| Rhino | Target runtime | macOS | Windows |
+| Rhino | 執行環境 | macOS | Windows |
 | --- | --- | --- | --- |
-| 7 | .NET Framework 4.8 / Mono, AnyCPU | `rhino7-mac.macrhi` | `rh7_0-win.yak` or `rhino7-windows-rhp.zip` |
-| 8.35+ | .NET 8, AnyCPU | `rhino8-mac.macrhi` | `rh8_35-win.yak` or `rhino8-windows-rhp.zip` |
-| 9 with .NET 10 | .NET 10, AnyCPU | `rhino9-mac.macrhi` | `rh9_0-win.yak` or `rhino9-windows-rhp.zip` |
+| 7 | .NET Framework 4.8／Mono、AnyCPU | `rhino7-mac.macrhi` | `rh7_0-win.yak` 或 `rhino7-windows-rhp.zip` |
+| 8.35+ | .NET 8、AnyCPU | `rhino8-mac.macrhi` | `rh8_35-win.yak` 或 `rhino8-windows-rhp.zip` |
+| 使用 .NET 10 的 9 | .NET 10、AnyCPU | `rhino9-mac.macrhi` | `rh9_0-win.yak` 或 `rhino9-windows-rhp.zip` |
 
-Rhino 9 packages are built against SDK 9.0.26300.9402 and require a .NET 10 Rhino 9 build. Package filename suffixes are shown above; complete filenames include the release version. **Install only the package matching the Rhino version you intend to use.** Older Rhino 8 builds and early Rhino 9 WIP builds using older .NET runtimes are not covered.
+Rhino 9 套件以 SDK 9.0.26300.9402 編譯，需要使用 .NET 10 的 Rhino 9。上表顯示檔名尾碼，完整檔名另含版本號。**同一套 Rhino 只安裝對應主版本的套件。** 不包含較舊的 Rhino 8 或使用舊 .NET 執行環境的早期 Rhino 9 WIP。
 
-## Features
+## 功能
 
-- Focus a Brep face: set a face CPlane and animate to a face-on parallel view. Planar faces use a plane; curved faces use a tangent frame at the pick point.
-- Back restores the pre-focus camera, projection, target, lens and CPlane. Flip reverses the focused viewing direction.
-- ViewCube face, edge and corner clicks snap the view and switch parallel / perspective projection. Drag to orbit; use the arrow buttons for 90° turns.
-- Orbit animation follows an arc rather than moving through the model. Rotation keeps its orbit radius and lens settings. Selecting one object uses its bounding-box center; multiple selected objects use the combined bounding-box center. With no selection, the current viewport target is used. This selection pivot applies to ViewCube dragging and its rotation buttons.
-- The home icon returns Perspective to the view saved before the current ViewCube session. Standard named views return to their default direction and frame visible objects.
-- The circular **C** button enables/disables camera alignment with CPlane changes. Clicking C changes the setting only. When disabled, selecting objects or changing the CPlane does not trigger plug-in camera alignment. It does not change Rhino's Auto CPlane preference.
-- Rhino 7 has no Rhino 8 Auto CPlane. Its C toggle follows manual / World CPlane changes.
-- The SmartView toolbar includes a custom light/dark cube icon for showing or hiding the ViewCube.
+- 選取 Brep 面，設定工作平面，再以動畫切換至平行正視。平面直接使用平面座標；曲面使用選取點的切線座標。
+- Back 還原正視前的攝影機、投影、目標、焦距與工作平面；Flip 翻轉觀看方向。
+- 點擊 ViewCube 的面、邊、角可切換視角及平行／透視；拖曳可旋轉，左右箭頭可水平轉 90°。
+- 旋轉動畫採圓弧路徑，保持旋轉半徑與焦距。單選物件使用其包圍盒中心；多選使用整組包圍盒中心；未選取時使用目前視圖目標點。此選取中心適用於 ViewCube 拖曳與旋轉按鈕。
+- 小房子圖示：Perspective 回到本次 ViewCube 操作前記錄的視角；標準命名視圖回到預設方向並將可見物件納入視窗。
+- 圓形 **C** 控制是否跟隨工作平面正對。點擊只切換設定，不立即移動攝影機。關閉時，選取物件或改變工作平面不會觸發外掛的自動正視；外掛不修改 Rhino Auto CPlane 的偏好設定。
+- Rhino 7 沒有 Rhino 8 Auto CPlane；C 可跟隨手動／世界工作平面的改變。
+- SmartView 工具列提供自訂立方體圖示，支援淺色／深色介面，點擊可顯示／隱藏 ViewCube。
 
-## Commands
+## 指令
 
-| Command | Action |
+| 指令 | 動作 |
 | --- | --- |
-| `SmartViewCube` | Show / hide ViewCube. Replaces the old `ononSmartViewCube` command. |
-| `ononSmartView` | Pick a Brep face and focus it. |
-| `ononSmartViewFlip` | Reverse the focused view. |
-| `ononSmartViewBack` | Restore the pre-focus camera and CPlane. |
-| `ononSmartViewAutoFace` | Toggle CPlane following, equivalent to C. |
-| `ononSmartViewFocusFace` | Scriptable focus: Brep GUID, zero-based face index and viewport name. |
+| `SmartViewCube` | 顯示／隱藏 ViewCube，取代舊指令 `ononSmartViewCube`。 |
+| `ononSmartView` | 選取 Brep 面並正視。 |
+| `ononSmartViewFlip` | 翻轉正視方向。 |
+| `ononSmartViewBack` | 還原正視前的攝影機與工作平面。 |
+| `ononSmartViewAutoFace` | 切換工作平面跟隨，等同 C 按鈕。 |
+| `ononSmartViewFocusFace` | 腳本正視：依序輸入 Brep GUID、從零開始的面索引、視窗名稱。 |
 
-Toolbar / keyboard macro: `_SmartViewCube`. Update existing shortcuts that use the previous command name.
+工具列／快捷鍵巨集：`_SmartViewCube`。舊快捷鍵若使用舊名稱，請一併更改。
 
-## Install on macOS
+## macOS 安裝
 
-1. Download the `.macrhi` for your Rhino major version from [Releases](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1).
-2. Quit that Rhino version, remove an older copy of this plug-in, and open the installer with the intended Rhino application (use **Open With** if several Rhino versions are installed).
-3. Restart Rhino. Run `SmartViewCube` to toggle the overlay.
+1. 到 [Releases](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1) 下載對應 Rhino 主版本的 `.macrhi`。
+2. 關閉該 Rhino，移除本外掛的舊版本，再用指定 Rhino 開啟安裝檔。若同時裝有多版 Rhino，請使用「打開檔案的應用程式」選擇正確版本。
+3. 重新啟動 Rhino；輸入 `SmartViewCube` 切換 ViewCube。
 
-The installer is unsigned. The bundle includes `ononSmartView.rui`. In Rhino 8/9, open it from toolbar settings and show the **SmartView** toolbar if it is not already visible. Toolbar customization differs in Rhino 7 for Mac; use the command or assign `_SmartViewCube` to a keyboard shortcut there.
+安裝包未簽署。包內包含 `ononSmartView.rui`；Rhino 8／9 若未顯示圖示按鈕，可從工具列設定開啟它，再顯示 **SmartView** 工具列。Rhino 7 Mac 的工具列自訂方式不同，可直接輸入指令或將 `_SmartViewCube` 設為快捷鍵。
 
-## Install on Windows
+## Windows 安裝
 
-**Manual RHP installation** is available for Rhino 7, 8 and 9:
+Rhino 7、8、9 均提供 **RHP 手動安裝 ZIP**：
 
-1. Download the matching `rhinoN-windows-rhp.zip` and extract it into a permanent local folder.
-2. If Windows Properties offers **Unblock**, unblock the downloaded archive/files.
-3. Run `PlugInManager` in the matching Rhino version, choose **Install**, and select the extracted `ononSmartView.rhp`. Do not load directly from the ZIP or move the folder afterwards.
-4. Open `ononSmartView.rui` in toolbar settings if you want the icon button.
+1. 下載對應的 `rhinoN-windows-rhp.zip`，完整解壓縮至固定本機資料夾。
+2. 若 Windows 檔案內容顯示「解除封鎖」，先解除封鎖下載的 ZIP／檔案。
+3. 在對應 Rhino 執行 `PlugInManager` →「安裝」→ 選擇解壓縮後的 `ononSmartView.rhp`。不要從 ZIP 內直接開啟，安裝後不要移動該資料夾。
+4. 如需圖示按鈕，從工具列設定開啟 `ononSmartView.rui`。
 
-Alternatively, install the matching `.yak` from PowerShell. For Rhino 7:
+也可用對應 Rhino 的 Yak CLI 安裝 `.yak`。例如在 PowerShell 安裝 Rhino 7 版：
 
 ```powershell
 & "$env:ProgramFiles\Rhino 7\System\Yak.exe" install "C:\Downloads\ononsmartview-0.2.0-beta.1-rh7_0-win.yak"
 ```
 
-Replace `Rhino 7` and the package path for Rhino 8 or 9. A `.yak` is a package, not an RHP or model file; use Yak CLI if dragging it into Rhino reports an unsupported type. Remove an older installation and restart Rhino before switching between Yak and manual installation, to avoid duplicate copies.
+Rhino 8／9 請替換程式路徑與套件檔名。`.yak` 是套件，不是 RHP 或模型；拖曳若出現「不支援的類型」，請使用 CLI。切換 Yak 與手動安裝方式前，先移除舊副本並重新啟動 Rhino，避免重複載入。
 
-## Build and packaging
+## 編譯與封裝
 
-Source is included in this repository and the versioned source ZIP. Use the .NET 8 SDK for Rhino 8, the .NET 10 SDK for Rhino 9, and the .NET Framework 4.8 reference-assembly package for Rhino 7. Reference the RhinoCommon SDK for the target major version; do not reference Rhino 9 assemblies when building for Rhino 7/8.
+本專案及版本化 source ZIP 提供原始碼。Rhino 8 使用 .NET 8 SDK，Rhino 9 使用 .NET 10 SDK，Rhino 7 使用 .NET Framework 4.8 參考組件套件。請選擇對應主版本的 RhinoCommon，不能用 Rhino 9 組件建立 Rhino 7／8 版。
 
 ```sh
 dotnet build ononSmartView.csproj -c Release -p:RhinoVersion=9
-# For Rhino 7/8, use -p:RhinoVersion=7 or 8.
-# Override SDK location with -p:RhinoCommonPath=/absolute/path/RhinoCommon.dll.
+# Rhino 7／8 改為 -p:RhinoVersion=7 或 8。
+# 可用 -p:RhinoCommonPath=/絕對路徑/RhinoCommon.dll 指定 SDK。
 ```
 
-For Rhino 7, the default SDK location is `work/rhino7-sdk/lib/net45/RhinoCommon.dll`, extracted from official NuGet package `RhinoCommon 7.0.20314.3001`. `scripts/package-release.py` packages existing successful builds for all three versions; `scripts/build-toolbar.py` regenerates the vector toolbar assets (requires Pillow). No WPF or Windows Forms UI is used.
+Rhino 7 的預設 SDK 位置為 `work/rhino7-sdk/lib/net45/RhinoCommon.dll`，由官方 NuGet 套件 `RhinoCommon 7.0.20314.3001` 解壓縮取得。`scripts/package-release.py` 封裝三個已成功編譯的版本；`scripts/build-toolbar.py` 產生向量工具列圖示（需要 Pillow）。沒有使用 WPF 或 Windows Forms 介面。
 
-## Testing and limitations
+## 測試與限制
 
-- Mac Rhino 9 MCP checks confirmed constant-radius rotation, stable lens values, selected-object pivots and mouse callback behavior in recent builds. The 20-second demonstration uses installed beta.6 functionality.
-- The new release is rebuilt from that source with target-specific SDKs. Runtime testing of these exact release binaries is still pending.
-- Rhino 7/8 current binaries and all Windows runtime behavior remain unverified. Rhino 8.35 has earlier historical checks, which do not validate this new release.
-- Native toolbar layout varies by platform/version. No automatic double-click-to-focus gesture is installed.
+- 近期版本曾在 Mac Rhino 9 透過 MCP 驗證固定半徑旋轉、焦距、選取中心與拖曳回呼。20 秒示範使用已安裝的 beta.6 功能。
+- 本次以同一功能原始碼，針對各版 SDK 重新建置；這些確切發布檔的實機回歸測試仍待完成。
+- Rhino 7／8 本次套件及所有 Windows 的實際操作均尚未驗證。較早的 Rhino 8.35 驗證不代表本次新發布檔已驗證。
+- 原生工具列在各平台／版本的配置方式不同；未安裝雙擊曲面自動正視的手勢。
 
-## License
+## 授權
 
-No license has been selected. All rights are reserved by default. Contact the author before redistributing or modifying this project.
+尚未指定授權，預設保留所有權利。重新散布或修改前請先聯絡作者。
