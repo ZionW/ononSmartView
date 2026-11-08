@@ -1,7 +1,7 @@
 # ononSmartView
 
 **Rhino 7、8、9 視圖導覽測試外掛 · macOS／Windows**
-[English](README.md) · [下載 v0.2.0-beta.1](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)
+[English](README.en.md) · [下載 v0.2.0-beta.1](https://github.com/ZionW/ononSmartView/releases/tag/v0.2.0-beta.1)
 
 > **此為測試版本，仍有疏漏、不足及未驗證之處。** 各 Rhino 主版本分別編譯。近期操作驗證與示範使用 macOS Rhino 9；本次新建置的 Rhino 7／8，以及所有 Windows 套件，尚未於對應的 Rhino 實機測試。重要模型請先儲存備份。
 
